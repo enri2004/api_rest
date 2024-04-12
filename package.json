@@ -1,10 +1,14 @@
 {
+"homepage": " https://enri2004.github.io/api_rest/",
+
   "name": "server",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
     "start": "babel-node index.js",
-    "dev": "nodemon --exec babel-node index.js"
+    "dev": "nodemon --exec babel-node index.js",
+    "predeploy":"npm run build",
+    "deploy":"gh-pages -d build"
   },
   "type": "module",
   "keywords": [],
@@ -28,6 +32,7 @@
   "description": "",
   "devDependencies": {
     "concurrently": "^8.2.2",
+    "gh-pages": "^6.1.1",
     "nodemon": "^3.1.0"
   }
 }
