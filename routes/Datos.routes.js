@@ -1,5 +1,5 @@
 import { Router } from "express";
-import Datosctr from "../controllers/Datos.controllers";
+import Datosctr from "../controllers/Datos.controllers.js";
 
 const router = Router();
 

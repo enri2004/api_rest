@@ -18,4 +18,5 @@ const datosSchema = mongoose.Schema({
 });
 
 const Datos = mongoose.model('Datos', datosSchema);
+
 export default Datos;
