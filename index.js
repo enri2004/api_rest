@@ -19,6 +19,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api", routes);
 
 app.listen(port, () => {
-    console.log(`Example app listening on port: ${port}`);
+    console.log(`Servidor API REST escuchando en el puerto: ${port}`);
 });
 
