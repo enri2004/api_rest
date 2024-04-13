@@ -18,6 +18,22 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/api", router);
 
+
+const Datos = mongoose.model('Datos');
+
+app.get('/datos', async (req, res) => {
+    try {
+        // Consultar datos utilizando el modelo
+        const datos = await Datos.find();
+        // Enviar respuesta con los datos
+        res.json(datos);
+    } catch (error) {
+        console.error('Error al recuperar datos:', error);
+        res.status(500).json({ error: 'Error al recuperar datos' });
+    }
+});
+
+
 app.listen(port, () => {
     console.log(`Servidor API REST escuchando en el puerto: ${port}`);
 });

@@ -53,14 +53,12 @@ export default {
   getDatos: async (req, res, next) => {
     try {
       const datos = await Datos.find();
-      res.status(200).json(datos);
-      console.log("exitosa")
+        // Enviar respuesta con los datos
+        res.json(datos);
+        console.log("mi nueva")
     } catch (error) {
-      res.status(500).send({
-        message: "Error al obtener los datos",
-        error: error.message
-      });
-      next(error);
+        console.error('Error al recuperar datos:', error);
+        res.status(500).json({ error: 'Error al recuperar datos' });
     }
   },
 
