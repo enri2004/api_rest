@@ -54,6 +54,7 @@ export default {
     try {
       const datos = await Datos.find();
       res.status(200).json(datos);
+      console.log("exitosa")
     } catch (error) {
       res.status(500).send({
         message: "Error al obtener los datos",
@@ -94,4 +95,6 @@ export default {
       next(error);
     }
   }
+
+  
 }
