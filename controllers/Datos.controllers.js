@@ -6,7 +6,6 @@ export default {
     try {
       const {
         usuario,
-        nombre,
         contraseña,
         apellido_paterno,
         apellido_materno,
