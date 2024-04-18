@@ -1,10 +1,11 @@
 import { Router } from "express";
 import Datosctr from "../controllers/Datos.controllers.js";
+import login from "../controllers/Auth.Controllers.js";
 
 const router = Router();
 
-router.post("/saveData", (req, res, next) => {
-    Datosctr.postDatos(req, res, next).catch(next);
+router.post("/saveData", (req, res, next) => { 
+    Datosctr.postDatos(req, res, next).catch(next)
 });
 
 router.get("/datos", (req, res, next) => {
@@ -19,5 +20,8 @@ router.delete("/delete/:id", (req, res, next) => {
     Datosctr.delDatos(req, res, next).catch(next);
 });
 
+router.post("/login", (req, res, next) => { 
+    login(req, res, next).catch(next)
+});
 
 export default router;

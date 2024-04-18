@@ -1,12 +1,10 @@
 import Datos from "../models/Datos.models.js";
-
+import bcrypt from "bcrypt"
 export default {
   // Endpoint para enviar datos
   postDatos: async (req, res, next) => {
     try {
       const {
-        usuario,
-        contraseña,
         apellido_paterno,
         apellido_materno,
         institucion,
@@ -18,7 +16,12 @@ export default {
         fecha_nacimiento,
         nombre,
         edad,
-        lugar
+        lugar,
+        usuario,
+        contraseña,
+        roles,
+        active,
+      
       } = req.body;
 
       const guardarDatos = new Datos({
@@ -35,9 +38,16 @@ export default {
         telefono,
         fecha_nacimiento,
         edad,
-        lugar
+        lugar,
+        roles,
+        active:"true"
       });
 
+      const salt=bcrypt.genSaltSync(10);
+      const hashcontraseña=bcrypt.hashSync(contraseña,salt);
+      
+      guardarDatos.contraseña=hashcontraseña;
+      
       const guardar = await guardarDatos.save();
       res.status(200).json(guardar);
     } catch (error) {
@@ -93,6 +103,9 @@ export default {
       next(error);
     }
   }
+      
 
+  
+ 
   
 }

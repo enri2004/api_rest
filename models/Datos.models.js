@@ -2,7 +2,6 @@ import mongoose from "mongoose";
 
 const datosSchema = mongoose.Schema({
     nombre: String,
-    contraseña: String,
     apellido_paterno: String,
     apellido_materno: String,
     institucion: String,
@@ -11,10 +10,16 @@ const datosSchema = mongoose.Schema({
     sexo: String,
     email: String,
     telefono: Number,
-    fecha_nacimiento: Date,
+    fecha_nacimiento: String,
     edad: Number,
     lugar: String,
-    usuario: String, // Assuming this is for authentication purposes
+    usuario: String,
+    contraseña: String,
+    roles:String,
+    active:Boolean,
+    avatar:String
+
+
 });
 
 const Datos = mongoose.model('Datos', datosSchema);

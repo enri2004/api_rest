@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import router from "./routes/Datos.routes.js";
 import mongoose from "mongoose";
+//import  {  DB_USER, DB_PASSWORD,DB_HOST,DB_NAME}   from "./constantes.js"
 
 const app = express();
 const port = 3000;
@@ -17,7 +18,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/api", router);
-
 
 const Datos = mongoose.model('Datos');
 
