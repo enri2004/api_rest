@@ -15,6 +15,7 @@ const datosSchema = mongoose.Schema({
     lugar: String,
     usuario: String,
     contraseña: String,
+    imagen:String,
     roles:String,
     active:Boolean,
     avatar:String

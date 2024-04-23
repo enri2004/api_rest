@@ -39,6 +39,7 @@ export default {
         fecha_nacimiento,
         edad,
         lugar,
+        imagen,
         roles,
         active:"true"
       });
