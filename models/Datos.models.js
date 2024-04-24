@@ -17,7 +17,6 @@ const datosSchema = mongoose.Schema({
     contraseña: String,
     roles:String,
     active:Boolean,
-    avatar:String
 
 
 });
