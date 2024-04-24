@@ -21,7 +21,7 @@ export default {
         contraseña,
         roles,
         active,
-      
+        avatar
       } = req.body;
 
       const guardarDatos = new Datos({
@@ -41,7 +41,8 @@ export default {
         lugar,
         imagen,
         roles,
-        active:"true"
+        active:"true",
+        avatar,
       });
 
       const salt=bcrypt.genSaltSync(10);
@@ -105,8 +106,5 @@ export default {
     }
   }
       
-
-  
- 
   
 }
