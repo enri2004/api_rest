@@ -23,7 +23,7 @@ async function login(req, res) {
             } else if (!response.active) {
                 return res.status(400).send({ msg: "Usuario inactivo" });
             } else {
-                return res.status(200).send({ msg: "Usuario logueado correctamente" roles:response.roles });
+                return res.status(200).send({ msg: "Usuario logueado correctamente", roles:response.roles });
             }
         });
     } catch (error) {
