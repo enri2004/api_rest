@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import router from "./routes/Datos.routes.js";
 import mongoose from "mongoose";
-//import  {  DB_USER, DB_PASSWORD,DB_HOST,DB_NAME}   from "./constantes.js"
+import  {  DB_USER, DB_PASSWORD,DB_HOST,DB_NAME}   from "./constantes.js"
 
 const app = express();
 const port = 3000;
