@@ -17,7 +17,7 @@ async function login(req, res) {
 
         bcrypt.compare(contraseña, response.contraseña, (bcryptError, check) => {
             if (bcryptError) {
-                return res.status(500).send({ msg: "Error del usuario" });
+                return res.status(500).send({ msg: "Error del usuario", roles:response.roles });
             } else if (!check) {
                 return res.status(400).send({ msg: "Contraseña incorrecta" });
             } else if (!response.active) {
