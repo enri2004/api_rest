@@ -43,7 +43,6 @@ async function correo(req,res){
         institucion,
         email,
         telefono,
-        edad,
         lugar,]=req.body
 
     try{
