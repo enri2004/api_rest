@@ -62,7 +62,7 @@ async function correo(req,res){
         }
         const password=  await  bcrypt.compare(req.body.contraseña, user.contraseña);
         const usuario=user.usuario;
-        await sendEmail(correo, password,usuario);
+        await sendEmail(email, password,usuario);
         return res.status(200).json({Message:"se enviaron los datos"});
     }catch(error){
         console.error("no se envio los datos");
