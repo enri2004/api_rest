@@ -46,15 +46,16 @@ async function correo(req,res){
         lugar,]=req.body
 
     try{
-        const user= await Datos.findOne({nombre:nombre,
-        usuario:usuario,
-        apellido_paterno:apellido_paterno,
-        apellido_materno:apellido_materno,
-        institucion:institucion,
-        email:email,
-        telefono:telefono,
-        edad:edad,
-        lugar:lugar});
+            const user = await Datos.findOne({
+                nombre: nombre,
+                usuario: usuario,
+                apellido_paterno: apellido_paterno,
+                apellido_materno: apellido_materno,
+                institucion: institucion,
+                email: email,
+                telefono: telefono,
+                lugar: lugar,
+        });
 
         if(!user){
             return res.status(400).json({error:"error"});
