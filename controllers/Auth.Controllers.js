@@ -31,7 +31,7 @@ async function login(req, res) {
         return res.status(500).send({ msg: "Error al autentificar", error: error.message });
     }
 }
-
+export {login};
 async function Correo(req, res) {
     const {
         usuario,
@@ -153,7 +153,8 @@ async function sendEmail(email, user) {
 }*/
 
 
-export {Correo,login};
+
+export default Correo;
 
 
 
