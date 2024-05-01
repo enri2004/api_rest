@@ -109,6 +109,8 @@ const alumno= new Datos({
         nombre,
 	    apellidos,
         matricula,
+     
+        
 });
 
 const guardar = await alumno.save();
