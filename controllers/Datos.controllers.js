@@ -46,7 +46,10 @@ export default {
       const hashcontraseña=bcrypt.hashSync(contraseña,salt);
       
       guardarDatos.contraseña=hashcontraseña;
-      
+      const existingUser = await Datos.findOne({ email });
+      if (existingUser) {
+          return res.status(400).json({ error: 'El correo electrónico ya está en uso' });
+      }
       const guardar = await guardarDatos.save();
       res.status(200).json(guardar);
     } catch (error) {

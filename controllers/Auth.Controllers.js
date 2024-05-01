@@ -1,6 +1,9 @@
 import Datos from '../models/Datos.models.js';
 import nodemailer from 'nodemailer';
 import bcrypt from "bcrypt";
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 async function login(req, res) {
     const { usuario, contraseña } = req.body;
@@ -31,7 +34,7 @@ async function login(req, res) {
         return res.status(500).send({ msg: "Error al autentificar", error: error.message });
     }
 }
-export {login};
+
 async function Correo(req, res) {
     const {
         usuario,
@@ -41,7 +44,8 @@ async function Correo(req, res) {
         nombre,
         institucion,
         telefono,
-        lugar
+        lugar,
+        email
     } = req.body;
 
     try {
@@ -59,9 +63,8 @@ async function Correo(req, res) {
         if (!user) {
             return res.status(400).json({ error: "Usuario no encontrado" });
         }
-
         // Enviar el correo electrónico con los datos del usuario
-        await sendEmail(user.email, user.usuario);
+        await sendEmail(user);
 
         return res.status(200).json({ message: "Datos enviados correctamente" });
     } catch (error) {
@@ -70,22 +73,25 @@ async function Correo(req, res) {
     }
 }
 
-async function sendEmail(email, usuario) {
-    // Configurar el transporte para enviar correos electrónicos
+
+async function sendEmail(user) {
+    // Configurar el transporte
     const transporter = nodemailer.createTransport({
-        service: 'gmail',
+        host:"smtp.gmail.com",
+        port:465,
+        secure:true,
         auth: {
-            user: process.env.EMAIL_USER, // Agrega tus credenciales de correo electrónico
-            pass: process.env.EMAIL_PASSWORD
+            user: "molina.hernandez.enri.cbta82@gmail.com",
+            pass: "ksupkqzajslrgpkg"
         },
     });
 
     // Configurar los detalles del correo electrónico
     const mailOptions = {
-        from: process.env.EMAIL_USER, // Dirección de correo electrónico del remitente
-        to: email, // Dirección de correo electrónico del destinatario
-        subject: 'Detalles de la cuenta', // Asunto del correo electrónico
-        text: `Nombre de usuario: ${usuario}` // Cuerpo del correo electrónico
+        from: "molina.hernandez.enri.cbta82@gmail.com",
+        to: user.email,
+        subject: 'Detalles de la cuenta',
+        text: `Nombre de usuario: ${user.usuario}\n contraseña: ${user.contraseña}`
     };
 
     // Enviar el correo electrónico
@@ -94,7 +100,7 @@ async function sendEmail(email, usuario) {
 
 
 
-export default Correo;
+export {login,Correo};
 
 
 
