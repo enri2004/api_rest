@@ -8,7 +8,7 @@ const datosSchema = mongoose.Schema({
     materia: String,
     semestre: String,
     sexo: String,
-    email:String,
+    email: { type: String, index: { unique: true, sparse: true } }, // Índice único que permite valores nulos
     telefono: Number,
     fecha_nacimiento:String,
     edad: Number,
@@ -18,6 +18,7 @@ const datosSchema = mongoose.Schema({
     contraseña1:String,
     roles:String,
     active:Boolean,
+    matricula:String
 
 });
 

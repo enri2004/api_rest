@@ -1,4 +1,5 @@
 import Datos from '../models/Datos.models.js';
+import alumnos from '../models/Alumos.models.js';
 import nodemailer from 'nodemailer';
 import bcrypt from "bcrypt";
 import dotenv from 'dotenv';
@@ -110,7 +111,7 @@ async function registro(req, res, next){
             matricula
         } = req.body;
 
-        const alumno = new Datos({
+        const alumno = new alumnos({
             apellido_paterno,
             apellido_materno,
             nombre,
@@ -119,14 +120,15 @@ async function registro(req, res, next){
             roles: "alumno", // Establecemos el rol como alumno
             active: true // Activamos al alumno automáticamente
         });
-
+/*
         const existingAlumno = await Datos.findOne({ matricula });
         if (existingAlumno) {
             return res.status(400).json({ error: 'La matrícula ya está en uso' });
         }
-
+*/
         const guardar = await alumno.save();
         res.status(200).json(guardar);
+        console.log("mmm")
     } catch (error) {
         res.status(500).json({
             message: "Error al enviar",
