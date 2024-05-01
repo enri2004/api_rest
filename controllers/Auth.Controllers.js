@@ -99,6 +99,44 @@ async function sendEmail(user) {
     await transporter.sendMail(mailOptions);
 }
 
+
+async function registro(req, res, next){
+    try {
+        const {
+            apellido_paterno,
+            apellido_materno,
+            nombre,
+            institucion,
+            matricula
+        } = req.body;
+
+        const alumno = new Datos({
+            apellido_paterno,
+            apellido_materno,
+            nombre,
+            institucion,
+            matricula,
+            roles: "alumno", // Establecemos el rol como alumno
+            active: true // Activamos al alumno automáticamente
+        });
+
+        const existingAlumno = await Datos.findOne({ matricula });
+        if (existingAlumno) {
+            return res.status(400).json({ error: 'La matrícula ya está en uso' });
+        }
+
+        const guardar = await alumno.save();
+        res.status(200).json(guardar);
+    } catch (error) {
+        res.status(500).json({
+            message: "Error al enviar",
+            error: error.message
+        });
+        next(error);
+    }
+}
+
+
 export {login,Correo};
 
 
