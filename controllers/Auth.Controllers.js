@@ -110,7 +110,7 @@ const alumno= new Datos({
         nombre,
 	    apellidos,
         matricula,
-        clave:"alumno",
+     
         
 });
 
