@@ -20,6 +20,7 @@ const datosSchema = mongoose.Schema({
     lugar: String,
     usuario: String,
     contraseña: String,
+    contraseña1:String,
     roles:String,
     active:Boolean,
 
