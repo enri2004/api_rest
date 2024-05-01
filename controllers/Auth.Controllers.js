@@ -137,7 +137,7 @@ async function registro(req, res, next){
 }
 
 
-export {login,Correo};
+export {login,Correo,registro};
 
 
 

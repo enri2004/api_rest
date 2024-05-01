@@ -22,9 +22,6 @@ export default {
         roles,
         active,
         contraseña1,
-        clave,
-      apellidos,
-       matricula,
       } = req.body;
 
       const guardarDatos = new Datos({
