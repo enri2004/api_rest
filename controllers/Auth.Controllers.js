@@ -70,7 +70,7 @@ async function Correo(req, res) {
     }
 }
 
-async function sendEmail(email, usuario, contraseña) {
+async function sendEmail(email, usuario) {
     // Configurar el transporte para enviar correos electrónicos
     const transporter = nodemailer.createTransport({
         service: 'gmail',
@@ -85,7 +85,7 @@ async function sendEmail(email, usuario, contraseña) {
         from: process.env.EMAIL_USER, // Dirección de correo electrónico del remitente
         to: email, // Dirección de correo electrónico del destinatario
         subject: 'Detalles de la cuenta', // Asunto del correo electrónico
-        text: `Nombre de usuario: ${usuario}\nContraseña: ${contraseña}` // Cuerpo del correo electrónico
+        text: `Nombre de usuario: ${usuario}` // Cuerpo del correo electrónico
     };
 
     // Enviar el correo electrónico
