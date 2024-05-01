@@ -20,7 +20,7 @@ const datosSchema = mongoose.Schema({
     active:Boolean,
     clave:String,
     apellidos:String,
-
+    matricula:String,
 
 });
 

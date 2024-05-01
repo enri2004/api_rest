@@ -104,11 +104,13 @@ async function alumnos(req , res){
         nombre,
 	    apellidos,
         matricula,
+        clave,
     }=req.body
 const alumno= new Datos({
         nombre,
 	    apellidos,
         matricula,
+        clave:"alumno",
         
 });
 
