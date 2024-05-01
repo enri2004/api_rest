@@ -99,34 +99,7 @@ async function sendEmail(user) {
     await transporter.sendMail(mailOptions);
 }
 
-async function alumnos(req , res){
-    try {const{
-        nombre,
-	    apellidos,
-        matricula,
-    }=req.body
-const alumno= new Datos({
-        nombre,
-	    apellidos,
-        matricula,
-     
-        
-});
-
-const actual = await alumno.save();
-res.status(200).json(actual);
-} catch (error) {
-res.status(500).send({
-  message: "Error al enviar",
-  error: error.message
-});
-}
-
-}
-
-
-
-export {login,Correo,alumnos};
+export {login,Correo};
 
 
 
