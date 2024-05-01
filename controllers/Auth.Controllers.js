@@ -99,29 +99,28 @@ async function sendEmail(user) {
     await transporter.sendMail(mailOptions);
 }
 
-async function alumnos(res ,req){
+async function alumnos(req , res){
     try {const{
         nombre,
-	    Apellidos,
-        Matricula,
-        clave,
+	    apellidos,
+        matricula,
     }=req.body
-const alumnos= new Datos({
+const alumno= new Datos({
         nombre,
-	    Apellidos,
-        Matricula,
-        clave:"alumno",
+	    apellidos,
+        matricula,
+        
 });
 
-const guardar = await alumnos.save();
-      res.status(200).json(guardar);
-    } catch (error) {
-      res.status(500).send({
-        message: "Error al enviar",
-        error: error.message
-      });
-      next(error);
-    }
+const guardar = await alumno.save();
+res.status(200).json(guardar);
+} catch (error) {
+res.status(500).send({
+  message: "Error al enviar",
+  error: error.message
+});
+}
+
 }
 
 
