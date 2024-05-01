@@ -39,6 +39,7 @@ async function Correo(req, res) {
     const {
         usuario,
         contraseña,
+        contraseña1,
         apellido_paterno,
         apellido_materno,
         nombre,
@@ -91,7 +92,7 @@ async function sendEmail(user) {
         from: "molina.hernandez.enri.cbta82@gmail.com",
         to: user.email,
         subject: 'Detalles de la cuenta',
-        text: `Nombre de usuario: ${user.usuario}\n contraseña: ${user.contraseña}`
+        text: `Nombre de usuario: ${user.usuario}\n contraseña: ${user.contraseña1}`
     };
 
     // Enviar el correo electrónico
