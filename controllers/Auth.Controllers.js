@@ -48,21 +48,22 @@ async function correo(req,res){
     try{
             const user = await Datos.findOne({
                 nombre: nombre,
-                usuario: usuario,
                 apellido_paterno: apellido_paterno,
                 apellido_materno: apellido_materno,
                 institucion: institucion,
                 email: email,
                 telefono: telefono,
                 lugar: lugar,
+                usuario:usuario,
+                contraseña:contraseña,
         });
 
         if(!user){
             return res.status(400).json({error:"error"});
         }
         const password=  await  bcrypt.compare(req.body.contraseña, user.contraseña);
-        const usuario=user.usuario;
-        await sendEmail(email, password,usuario);
+        const usuario1=user.usuario;
+        await sendEmail(email, password,usuario1);
         return res.status(200).json({Message:"se enviaron los datos"});
     }catch(error){
         console.error("no se envio los datos");
