@@ -48,7 +48,6 @@ async function Correo(req, res) {
         // Buscar el usuario en la base de datos
         const user = await Datos.findOne({
             usuario: usuario,
-            contraseña: contraseña,
             apellido_paterno: apellido_paterno,
             apellido_materno: apellido_materno,
             nombre: nombre,
@@ -62,7 +61,7 @@ async function Correo(req, res) {
         }
 
         // Enviar el correo electrónico con los datos del usuario
-        await sendEmail(user.email, user.usuario, contraseña);
+        await sendEmail(user.email, user.usuario);
 
         return res.status(200).json({ message: "Datos enviados correctamente" });
     } catch (error) {
@@ -92,65 +91,6 @@ async function sendEmail(email, usuario, contraseña) {
     // Enviar el correo electrónico
     await transporter.sendMail(mailOptions);
 }
-/*
-async function Correo(req,res){
-    const [
-        usuario,
-        contraseña,
-        apellido_paterno,
-        apellido_materno,
-        nombre,
-        institucion,
-        email,
-        telefono,
-        lugar,]=req.body
-
-    try{
-            const user = await Datos.findOne({
-                nombre: nombre,
-                apellido_paterno: apellido_paterno,
-                apellido_materno: apellido_materno,
-                institucion: institucion,
-                email: email,
-                telefono: telefono,
-                lugar: lugar,
-                usuario:usuario,
-                contraseña:contraseña,
-        });
-
-        if(!user){
-            return res.status(400).json({error:"error"});
-        }
-        const password=  await  bcrypt.compare(req.body.contraseña, user.contraseña);
-        const usuario1=user.usuario;
-        await sendEmail(email, password,usuario1);
-        return res.status(200).json({Message:"se enviaron los datos"});
-    }catch(error){
-        console.error("no se envio los datos");
-    }
-}
-
-async function sendEmail(email, user) {
-    // Configurar el transporte
-    const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-            user: process.env.EMAIL_USER,
-            pass: process.env.EMAIL_PASSWORD
-        },
-    });
-
-    // Configurar los detalles del correo electrónico
-    const mailOptions = {
-        from: process.env.EMAIL_USER,
-        to: email,
-        subject: 'Detalles de la cuenta',
-        text: `Nombre de usuario: ${user.usuario}\nContraseña: ${user.contraseña}`
-    };
-
-    // Enviar el correo electrónico
-    await transporter.sendMail(mailOptions);
-}*/
 
 
 
