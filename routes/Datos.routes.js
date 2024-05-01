@@ -23,7 +23,7 @@ router.delete("/delete/:id", (req, res, next) => {
 router.post("/login", (req, res, next) => { 
     login(req, res, next).catch(next)
 });
-router.post("/Correo", (req, res, next) => {
+router.post("/correo", (req, res, next) => {
     Correo(req, res, next).catch(next); // Llama a la función Correo del controlador
 });
 
