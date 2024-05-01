@@ -116,8 +116,11 @@ const alumnos= new Datos({
 const guardar = await alumnos.save();
 res.status(200).json("datos guardados");
     }catch(error){
-        res.status(200).json("no se guardo")
-    }
+        res.status(500).send({
+            message: "Error al enviar",
+            error: error.message
+          });
+          next(error);}
 
 }
 
