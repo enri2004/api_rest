@@ -8,7 +8,7 @@ const datosSchema = mongoose.Schema({
     materia: String,
     semestre: String,
     sexo: String,
-    email:String,
+    email:{ type: String, index: { unique: false, sparse: true } },
     telefono: Number,
     fecha_nacimiento:String,
     edad: Number,
