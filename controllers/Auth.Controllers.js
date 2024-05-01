@@ -104,19 +104,17 @@ async function sendEmail(user) {
 async function registro(req, res, next){
     try {
         const {
-            apellido_paterno,
-            apellido_materno,
+            Apellidos,
             nombre,
             institucion,
-            matricula
+            Matricula
         } = req.body;
 
         const alumno = new alumnos({
-            apellido_paterno,
-            apellido_materno,
+            Apellidos,
             nombre,
             institucion,
-            matricula,
+            Matricula,
             roles: "alumno", // Establecemos el rol como alumno
             active: true // Activamos al alumno automáticamente
         });

@@ -2,9 +2,9 @@ import mongoose from "mongoose";
 
 const alumnoSchema = mongoose.Schema({
     nombre: String,
-    apellido_paterno: String,
-    apellido_materno: String,
+    Apellidos:String,
     institucion: String,
+    Matricula:String,
     roles:String,
 
 });
