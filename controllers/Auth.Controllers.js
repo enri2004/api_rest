@@ -32,8 +32,68 @@ async function login(req, res) {
     }
 }
 
+async function Correo(req, res) {
+    const {
+        usuario,
+        contraseña,
+        apellido_paterno,
+        apellido_materno,
+        nombre,
+        institucion,
+        telefono,
+        lugar
+    } = req.body;
 
-async function correo(req,res){
+    try {
+        // Buscar el usuario en la base de datos
+        const user = await Datos.findOne({
+            usuario: usuario,
+            contraseña: contraseña,
+            apellido_paterno: apellido_paterno,
+            apellido_materno: apellido_materno,
+            nombre: nombre,
+            institucion: institucion,
+            telefono: telefono,
+            lugar: lugar
+        });
+
+        if (!user) {
+            return res.status(400).json({ error: "Usuario no encontrado" });
+        }
+
+        // Enviar el correo electrónico con los datos del usuario
+        await sendEmail(user.email, user.usuario, contraseña);
+
+        return res.status(200).json({ message: "Datos enviados correctamente" });
+    } catch (error) {
+        console.error("Error al enviar los datos por correo:", error);
+        return res.status(500).json({ error: "Error al enviar los datos por correo" });
+    }
+}
+
+async function sendEmail(email, usuario, contraseña) {
+    // Configurar el transporte para enviar correos electrónicos
+    const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: process.env.EMAIL_USER, // Agrega tus credenciales de correo electrónico
+            pass: process.env.EMAIL_PASSWORD
+        },
+    });
+
+    // Configurar los detalles del correo electrónico
+    const mailOptions = {
+        from: process.env.EMAIL_USER, // Dirección de correo electrónico del remitente
+        to: email, // Dirección de correo electrónico del destinatario
+        subject: 'Detalles de la cuenta', // Asunto del correo electrónico
+        text: `Nombre de usuario: ${usuario}\nContraseña: ${contraseña}` // Cuerpo del correo electrónico
+    };
+
+    // Enviar el correo electrónico
+    await transporter.sendMail(mailOptions);
+}
+/*
+async function Correo(req,res){
     const [
         usuario,
         contraseña,
@@ -90,10 +150,10 @@ async function sendEmail(email, user) {
 
     // Enviar el correo electrónico
     await transporter.sendMail(mailOptions);
-}
+}*/
 
 
-export {correo,login};
+export {Correo,login};
 
 
 
