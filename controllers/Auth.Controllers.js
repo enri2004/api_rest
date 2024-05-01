@@ -113,8 +113,8 @@ const alumno= new Datos({
         
 });
 
-const guardar = await alumno.save();
-res.status(200).json(guardar);
+const actual = await alumno.save();
+res.status(200).json(actual);
 } catch (error) {
 res.status(500).send({
   message: "Error al enviar",
