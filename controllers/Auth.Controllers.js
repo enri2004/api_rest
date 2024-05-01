@@ -105,15 +105,16 @@ async function registro(req, res, next){
     try {
         const {
             Apellidos,
-            nombre,
-            institucion,
-            Matricula
+            Nombre,
+            //institucion,
+            Matricula,
+            active
         } = req.body;
 
         const alumno = new alumnos({
             Apellidos,
-            nombre,
-            institucion,
+            Nombre,
+            //institucion,
             Matricula,
             roles: "alumno", // Establecemos el rol como alumno
             active: true // Activamos al alumno automáticamente

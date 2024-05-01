@@ -1,11 +1,12 @@
 import mongoose from "mongoose";
 
 const alumnoSchema = mongoose.Schema({
-    nombre: String,
+    Nombre: String,
     Apellidos:String,
-    institucion: String,
+    //institucion: String,
     Matricula:String,
     roles:String,
+    active:Boolean,
 
 });
 
