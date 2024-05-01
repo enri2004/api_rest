@@ -23,6 +23,8 @@ const datosSchema = mongoose.Schema({
     contraseña1:String,
     roles:String,
     active:Boolean,
+    clave:String,
+    apellidos:String,
 
 
 });

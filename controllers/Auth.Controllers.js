@@ -99,9 +99,31 @@ async function sendEmail(user) {
     await transporter.sendMail(mailOptions);
 }
 
+async function alumnos(res ,req){
+    try {const{
+        nombre,
+	    Apellidos,
+        Matricula,
+        clave,
+    }=req.body
+const alumnos= new Datos({
+        nombre,
+	    Apellidos,
+        Matricula,
+        clave:"alumno",
+});
+
+const guardar = await alumnos.save();
+res.status(200).json("datos guardados");
+    }catch(error){
+        res.status(200).json("no se guardo")
+    }
+
+}
 
 
-export {login,Correo};
+
+export {login,Correo,alumnos};
 
 
 
