@@ -181,10 +181,11 @@ async function editar(req, res){
 
 async function eliminar(req, res) {
     try {
-        const idAlumno = req.params.Matricula; // Obtener el ID del alumno de los parámetros de la URL
+        const matriculaAlumno = req.params.Matricula; // Obtener la matrícula del alumno de los parámetros de la URL
 
-        // Buscar el alumno por su ID y eliminarlo
-        const alumnoEliminado = await alumnos.findByIdAndDelete(idAlumno);
+        // Buscar el alumno por su matrícula y eliminarlo
+        const alumnoEliminado = await alumnos.findOneAndDelete({ Matricula: matriculaAlumno });
+
 
         // Verificar si el alumno existe y fue eliminado correctamente
         if (!alumnoEliminado) {
