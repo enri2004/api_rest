@@ -37,7 +37,7 @@ app.get('/datos', async (req, res) => {
 
 const alumnos = mongoose.model('alumnos');
 
-app.get('/alumnos', async (req, res) => {
+app.get('api/alumnos', async (req, res) => {
     try {
         // Consultar datos utilizando el modelo
         const datos = await alumnos.find();

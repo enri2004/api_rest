@@ -33,8 +33,6 @@ router.post("/registrar", (req, res, next) => {
     registro(req, res, next).catch(next); // Llama a la función Correo del controlador
 });
 
-router.get("/alumnos", (req, res, next) => {
-    getalumnos(req, res, next).catch(next);
-});
+
 
 export default router;
