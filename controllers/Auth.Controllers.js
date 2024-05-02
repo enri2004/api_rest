@@ -154,12 +154,14 @@ async function editar(req, res, next){
         } = req.body;
 
         // Buscar el alumno existente por su ID
-        const alumnoExistente = await alumnos.findById(id);
+       // const alumnoExistente = await alumnos.findById(id);
+       const alumnoExistente = await alumnos.findById(id.toString());
 
         // Verificar si el alumno existe
         if (!alumnoExistente) {
             return res.status(404).json({ message: 'El alumno no existe' });
         }
+        
 
         // Actualizar los datos del alumno existente
         alumnoExistente.Nombre = Nombre;
