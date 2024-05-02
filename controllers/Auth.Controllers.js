@@ -186,7 +186,6 @@ async function eliminar(req, res) {
         // Buscar el alumno por su matrícula y eliminarlo
         const alumnoEliminado = await alumnos.findOneAndDelete({ Matricula: matriculaAlumno });
 
-
         // Verificar si el alumno existe y fue eliminado correctamente
         if (!alumnoEliminado) {
             return res.status(404).json({ message: 'El alumno no existe' });
@@ -199,6 +198,7 @@ async function eliminar(req, res) {
         res.status(500).json({ message: 'Error al eliminar el alumno' });
     }
 }
+
 
 
 export {login,Correo,registro,editar,eliminar};
