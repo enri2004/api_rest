@@ -4,6 +4,8 @@ import nodemailer from 'nodemailer';
 import bcrypt from "bcrypt";
 import dotenv from 'dotenv';
 
+
+
 dotenv.config();
 
 async function login(req, res) {
@@ -159,22 +161,22 @@ async function editar(req, res, next){
             return res.status(404).json({ message: 'El alumno no existe' });
         }
 
-        // Actualizar los campos del alumno con los nuevos valores
+        // Actualizar los datos del alumno existente
         alumnoExistente.Nombre = Nombre;
         alumnoExistente.Apellidos = Apellidos;
         alumnoExistente.Matricula = Matricula;
         alumnoExistente.asistencia = asistencia;
 
         // Guardar los cambios en la base de datos
-        const alumnoActualizado = await alumnoExistente.save();
+        const datosActualizados = await alumnoExistente.save();
 
-        // Enviar la respuesta con el alumno actualizado
-        res.status(200).json({ message: 'Alumno actualizado correctamente', alumno: alumnoActualizado });
+        res.json(datosActualizados); // Devuelve los datos actualizados al cliente
     } catch (error) {
         console.error('Error al actualizar el alumno:', error);
-        res.status(500).json({ message: 'Error al actualizar el alumno' });
+        res.status(500).json({ message: 'Error interno del servidor' });
     }
 }
+
 
 async function eliminar(req, res, next) {
     try {
