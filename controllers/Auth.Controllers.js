@@ -143,7 +143,7 @@ async function registro(req, res, next){
     }
 }
 
-async function editar(req, res, next){
+async function editar(req, res){
     try {
         const {
             id,
@@ -154,9 +154,8 @@ async function editar(req, res, next){
         } = req.body;
 
         // Buscar el alumno existente por su ID
-       // const alumnoExistente = await alumnos.findById(id);
-       const alumnoExistente = await alumnos.findById(id.toString());
-
+       // const alumnoExistente = await alumnos.findById(id);const alumnoExistente = await alumnos.findById(id.toString());
+       const alumnoExistente = await alumnos.findOne({ Matricula });
         // Verificar si el alumno existe
         if (!alumnoExistente) {
             return res.status(404).json({ message: 'El alumno no existe' });
@@ -180,9 +179,9 @@ async function editar(req, res, next){
 }
 
 
-async function eliminar(req, res, next) {
+async function eliminar(req, res) {
     try {
-        const idAlumno = req.params.id; // Obtener el ID del alumno de los parámetros de la URL
+        const idAlumno = req.params.Matricula; // Obtener el ID del alumno de los parámetros de la URL
 
         // Buscar el alumno por su ID y eliminarlo
         const alumnoEliminado = await alumnos.findByIdAndDelete(idAlumno);
