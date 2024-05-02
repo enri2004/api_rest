@@ -1,7 +1,6 @@
 import { Router } from "express";
 import Datosctr from "../controllers/Datos.controllers.js";
-import  {login,Correo, registro,getalumnos}  from "../controllers/Auth.Controllers.js";
-import alumnos from "../models/Alumos.models.js";
+import  {login,Correo, registro}  from "../controllers/Auth.Controllers.js";
 
 
 const router = Router();
