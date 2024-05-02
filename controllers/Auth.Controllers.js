@@ -139,6 +139,34 @@ async function registro(req, res, next){
     }
 }
 
+async function editar(req, res, next){
+
+    try {
+        const{
+            id,
+            Nombre,
+            Apellidos,
+            //institucion: String,
+            Matricula,
+            asistencia
+        }=req.body
+
+        const datos = new alumnos({
+            id,
+            Nombre,
+            Apellidos,
+            Matricula,
+            asistencia
+        })
+
+      
+        
+    }catch(error){
+        res.status(400).json("no se puede conectar")
+    }
+
+}
+
 
 export {login,Correo,registro};
 

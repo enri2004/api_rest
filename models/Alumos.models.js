@@ -8,6 +8,7 @@ const alumnoSchema = mongoose.Schema({
     roles:String,
     active:Boolean,
     id:Number,
+    asistencia:String,
 
 });
 
