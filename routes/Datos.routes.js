@@ -32,7 +32,7 @@ router.post("/registrar", (req, res, next) => {
     registro(req, res, next).catch(next); // Llama a la función Correo del controlador
 });
 
-router.delete("/eliminar/:id", (req, res, next) => {
+router.delete("/alumnos/eliminar/:id", (req, res, next) => {
     eliminar(req, res, next).catch(next);
 });
 

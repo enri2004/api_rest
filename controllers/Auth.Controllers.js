@@ -179,7 +179,7 @@ async function editar(req, res){
 }
 
 
-async function eliminar(req, res) {
+/*async function eliminar(req, res) {
     try {
         const matriculaAlumno = req.body.Matricula; // Obtener la matrícula del alumno de los parámetros de la URL
 
@@ -197,6 +197,28 @@ async function eliminar(req, res) {
         console.error('Error al eliminar el alumno:', error);
         res.status(500).json({ message: 'Error al eliminar el alumno' });
     }
+
+}*/
+
+async function eliminar(req, res) {
+    try {
+        const {_id}=req.body; // Obtener la matrícula del alumno de los parámetros de la URL
+
+        // Buscar el alumno por su matrícula y eliminarlo
+        const alumnoEliminado = await alumnos.findByIdAndDelete({_id:_id})
+
+        // Verificar si el alumno existe y fue eliminado correctamente
+        if (!alumnoEliminado) {
+            return res.status(404).json({ message: 'El alumno no existe' });
+        }
+
+        // Enviar una respuesta con el alumno eliminado
+        res.status(200).json({ message: 'Alumno eliminado correctamente', alumno: alumnoEliminado });
+    } catch (error) {
+        console.error('Error al eliminar el alumno:', error);
+        res.status(500).json({ message: 'Error al eliminar el alumno' });
+    }
+
 }
 
 
