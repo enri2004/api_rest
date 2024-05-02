@@ -104,6 +104,7 @@ async function sendEmail(user) {
 async function registro(req, res, next){
     try {
         const {
+            id,
             Apellidos,
             Nombre,
             //institucion,
@@ -112,6 +113,7 @@ async function registro(req, res, next){
         } = req.body;
 
         const alumno = new alumnos({
+            id,
             Apellidos,
             Nombre,
             //institucion,

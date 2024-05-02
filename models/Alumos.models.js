@@ -7,6 +7,7 @@ const alumnoSchema = mongoose.Schema({
     Matricula:String,
     roles:String,
     active:Boolean,
+    id:Number,
 
 });
 
