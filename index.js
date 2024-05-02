@@ -34,6 +34,26 @@ app.get('/datos', async (req, res) => {
     }
 });
 
+async function eliminar(req, res, next) {
+    try {
+        const idAlumno = req.params.id; // Obtener el ID del alumno de los parámetros de la URL
+
+        // Buscar el alumno por su ID y eliminarlo
+        const alumnoEliminado = await alumnos.findByIdAndDelete(idAlumno);
+
+        // Verificar si el alumno existe y fue eliminado correctamente
+        if (!alumnoEliminado) {
+            return res.status(404).json({ message: 'El alumno no existe' });
+        }
+
+        // Enviar una respuesta con el alumno eliminado
+        res.status(200).json({ message: 'Alumno eliminado correctamente', alumno: alumnoEliminado });
+    } catch (error) {
+        console.error('Error al eliminar el alumno:', error);
+        res.status(500).json({ message: 'Error al eliminar el alumno' });
+    }
+}
+
 
 const alumnos = mongoose.model('alumnos');
 

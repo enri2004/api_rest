@@ -109,7 +109,8 @@ async function registro(req, res, next){
             Nombre,
             //institucion,
             Matricula,
-            active
+            active,
+            asistencia,
         } = req.body;
 
         const alumno = new alumnos({
@@ -119,7 +120,8 @@ async function registro(req, res, next){
             //institucion,
             Matricula,
             roles: "alumno", // Establecemos el rol como alumno
-            active: true // Activamos al alumno automáticamente
+            active: true, // Activamos al alumno automáticamente
+            asistencia,
         });
 /*
         const existingAlumno = await Datos.findOne({ matricula });
@@ -140,35 +142,62 @@ async function registro(req, res, next){
 }
 
 async function editar(req, res, next){
-
     try {
-        const{
-            id,
-            Nombre,
-            Apellidos,
-            //institucion: String,
-            Matricula,
-            asistencia
-        }=req.body
-
-        const datos = new alumnos({
+        const {
             id,
             Nombre,
             Apellidos,
             Matricula,
             asistencia
-        })
+        } = req.body;
 
-      
-        
-    }catch(error){
-        res.status(400).json("no se puede conectar")
+        // Buscar el alumno existente por su ID
+        const alumnoExistente = await alumnos.findById(id);
+
+        // Verificar si el alumno existe
+        if (!alumnoExistente) {
+            return res.status(404).json({ message: 'El alumno no existe' });
+        }
+
+        // Actualizar los campos del alumno con los nuevos valores
+        alumnoExistente.Nombre = Nombre;
+        alumnoExistente.Apellidos = Apellidos;
+        alumnoExistente.Matricula = Matricula;
+        alumnoExistente.asistencia = asistencia;
+
+        // Guardar los cambios en la base de datos
+        const alumnoActualizado = await alumnoExistente.save();
+
+        // Enviar la respuesta con el alumno actualizado
+        res.status(200).json({ message: 'Alumno actualizado correctamente', alumno: alumnoActualizado });
+    } catch (error) {
+        console.error('Error al actualizar el alumno:', error);
+        res.status(500).json({ message: 'Error al actualizar el alumno' });
     }
+}
 
+async function eliminar(req, res, next) {
+    try {
+        const idAlumno = req.params.id; // Obtener el ID del alumno de los parámetros de la URL
+
+        // Buscar el alumno por su ID y eliminarlo
+        const alumnoEliminado = await alumnos.findByIdAndDelete(idAlumno);
+
+        // Verificar si el alumno existe y fue eliminado correctamente
+        if (!alumnoEliminado) {
+            return res.status(404).json({ message: 'El alumno no existe' });
+        }
+
+        // Enviar una respuesta con el alumno eliminado
+        res.status(200).json({ message: 'Alumno eliminado correctamente', alumno: alumnoEliminado });
+    } catch (error) {
+        console.error('Error al eliminar el alumno:', error);
+        res.status(500).json({ message: 'Error al eliminar el alumno' });
+    }
 }
 
 
-export {login,Correo,registro};
+export {login,Correo,registro,editar,eliminar};
 
 
 
