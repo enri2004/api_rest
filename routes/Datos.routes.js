@@ -34,7 +34,7 @@ router.post("/registrar", (req, res, next) => {
 
 router.delete("/eliminar", (req, res, next) => {
     eliminar(req, res, next).catch(next);
-});s
+});
 
 router.patch("/editar", (req, res, next) => {
     editar(req, res, next).catch(next);
