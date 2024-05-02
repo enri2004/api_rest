@@ -137,7 +137,21 @@ async function registro(req, res, next){
     }
 }
 
-export {login,Correo,registro};
+async function getalumnos(req, res, next){
+    try {
+      // Consultar datos utilizando el modelo de alumnos
+      const alumnosData = await alumnos.find();
+      // Enviar respuesta con los datos
+      res.json(alumnosData);
+      console.log("Datos de alumnos recuperados exitosamente");
+    } catch (error) {
+      console.error('Error al recuperar datos de alumnos:', error);
+      res.status(500).json({ error: 'Error al recuperar datos de alumnos' });
+      next(error);
+    }
+  }
+
+export {login,Correo,registro,getalumnos};
 
 
 

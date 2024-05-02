@@ -1,6 +1,7 @@
 import { Router } from "express";
 import Datosctr from "../controllers/Datos.controllers.js";
-import  {login,Correo, registro}  from "../controllers/Auth.Controllers.js";
+import  {login,Correo, registro,getalumnos}  from "../controllers/Auth.Controllers.js";
+import alumnos from "../models/Alumos.models.js";
 
 
 const router = Router();
@@ -30,6 +31,10 @@ router.post("/correo", (req, res, next) => {
 
 router.post("/registrar", (req, res, next) => {
     registro(req, res, next).catch(next); // Llama a la función Correo del controlador
+});
+
+router.get("/alumnos", (req, res, next) => {
+    getalumnos(req, res, next).catch(next);
 });
 
 export default router;
