@@ -1,7 +1,8 @@
 import express from "express";
 import cors from "cors";
 import router from "./routes/Datos.routes.js";
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
+import { registro } from "./controllers/Auth.Controllers.js";
 //import  {  DB_USER, DB_PASSWORD,DB_HOST,DB_NAME}   from "./constantes.js"
 
 const app = express();
@@ -33,6 +34,20 @@ app.get('/datos', async (req, res) => {
     }
 });
 
+
+const alumnos = mongoose.model('alumnos');
+
+app.get('/alumnos', async (req, res) => {
+    try {
+        // Consultar datos utilizando el modelo
+        const datos = await alumnos.find();
+        // Enviar respuesta con los datos
+        res.json(datos);
+    } catch (error) {
+        console.error('Error al recuperar datos:', error);
+        res.status(500).json({ error: 'Error al recuperar datos' });
+    }
+});
 
 app.listen(port, () => {
     console.log(`Servidor API REST escuchando en el puerto: ${port}`);

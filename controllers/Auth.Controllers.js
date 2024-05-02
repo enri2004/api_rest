@@ -137,7 +137,6 @@ async function registro(req, res, next){
     }
 }
 
-
 export {login,Correo,registro};
 
 
