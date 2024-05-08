@@ -1,12 +1,15 @@
 import Datos from "../models/Datos.models.js";
 import bcrypt from "bcrypt"
+import multiparty from "connect-multiparty";
+const md_upload = multiparty({ uploadDir: "./uploads" });
+
+
 export default {
   // Endpoint para enviar datos
   postDatos: async (req, res, next) => {
     try {
       const {
-        apellido_paterno,
-        apellido_materno,
+        apellido,
         institucion,
         materia,
         semestre,
@@ -22,12 +25,11 @@ export default {
         roles,
         active,
         contraseña1,
+        Id_maestro,
       } = req.body;
-
+      const avatar = req.files ? req.files.avatar.path : '';
       const guardarDatos = new Datos({
-        apellido_paterno,
-        apellido_materno,
-        nombre,
+        apellido,
         institucion,
         materia,
         semestre,
@@ -35,25 +37,29 @@ export default {
         email,
         telefono,
         fecha_nacimiento,
+        nombre,
         edad,
         lugar,
-        roles,
-        active:"true",
         usuario,
         contraseña,
+        roles,
         contraseña1,
-      });
-
+        avatar,
+        Id_maestro,
+        active:true,
+});
+      
       const salt=bcrypt.genSaltSync(10);
       const hashcontraseña=bcrypt.hashSync(contraseña,salt);
       
       guardarDatos.contraseña=hashcontraseña;
-      const existingUser = await Datos.findOne({ email });
+     const existingUser = await Datos.findOne({ email });
       if (existingUser) {
           return res.status(400).json({ error: 'El correo electrónico ya está en uso' });
       }
       const guardar = await guardarDatos.save();
       res.status(200).json(guardar);
+      console.log("mmm")
     } catch (error) {
       res.status(500).send({
         message: "Error al enviar",

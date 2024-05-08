@@ -9,6 +9,7 @@ const alumnoSchema = mongoose.Schema({
     active:Boolean,
     id:Number,
     asistencia:String,
+    Id_maestro: String,
 
 });
 

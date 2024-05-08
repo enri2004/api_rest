@@ -9,7 +9,8 @@ const app = express();
 const port = 3000;
 
 mongoose.Promise = global.Promise;
-const dbUrl = 'mongodb+srv://Cluster:BZ5ii1h90MDMoEgr@cluster.28qg27o.mongodb.net/informacion';
+//const dbUrl = 'mongodb+srv://Cluster:BZ5ii1h90MDMoEgr@cluster.28qg27o.mongodb.net/informacion';
+const dbUrl = 'mongodb://127.0.0.1:27017/informacion';
 mongoose.connect(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('Conectado a la base de datos'))
     .catch(err => console.error('Error al conectar a la base de datos:', err));
