@@ -51,6 +51,8 @@ app.get('/alumnos', async (req, res) => {
     }
 });
 
+
+
 app.listen(port, () => {
     console.log(`Servidor API REST escuchando en el puerto: ${port}`);
 });

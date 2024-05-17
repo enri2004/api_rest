@@ -10,37 +10,6 @@ import {createAccessToken,createRefreshToken,decoded,} from "../utils/jwt.js";
 
 
 dotenv.config();
-
-/*async function login(req, res) {
-    const { usuario, contraseña } = req.body;
-
-    try {
-        if (!usuario) return res.status(400).send({ msg: "El usuario es obligatorio" });
-        if (!contraseña) return res.status(400).send({ msg: "La contraseña es obligatoria" });
-
-        const usuariollowerCase = usuario.toLowerCase();
-
-        const response = await Datos.findOne({ usuario: usuariollowerCase });
-        if (!response) {
-            return res.status(400).send({ msg: "Usuario no encontrado" });
-        }
-
-        bcrypt.compare(contraseña, response.contraseña, (bcryptError, check) => {
-            
-            if (bcryptError) {
-                return res.status(500).send({ msg: "Error del usuario" });
-            } else if (!check) {
-                return res.status(400).send({ msg: "Contraseña incorrecta" });
-
-            } else {
-                return res.status(200).send({ msg: "Usuario logueado correctamente", roles:response.roles });
-            }
-        });
-    } catch (error) {
-        return res.status(500).send({ msg: "Error al autentificar", error: error.message });
-    }
-}*/
-
 async function login(req,res){
     const {usuario,contraseña}=req.body;
 
@@ -60,16 +29,8 @@ async function login(req,res){
             }else if(!response.active){
                 res.status(400).send({msg: "Usuario inactivo"})
             }else{
-                /*res.status(200).send({
-                    access: createAccessToken(response),
-                    refresh: createRefreshToken(response),
-                    msg: "Usuario logueado correctamente", roles:response.roles, Id_maestro:response.Id_maestro,access:response.access
-                })*/
-               // return res.status(200).send({ msg: "Usuario logueado correctamente", roles:response.roles });
                const accessToken = createAccessToken(response);
-               const refreshToken = createRefreshToken(response);
-               
-               // Enviar los tokens en la respuesta junto con otros datos
+               const refreshToken = createRefreshToken(response);               
                res.status(200).send({
                    access: accessToken,
                    refresh: refreshToken,
@@ -248,28 +209,28 @@ async function editar(req, res){
         res.status(500).json({ message: 'Error interno del servidor' });
     }
 }
-
-
-/*async function eliminar(req, res) {
+async function editarAsistencia(req, res) {
     try {
-        const matriculaAlumno = req.body.Matricula; // Obtener la matrícula del alumno de los parámetros de la URL
+        const { asistencia } = req.body;
+        const { _id } = req.params;
 
-        // Buscar el alumno por su matrícula y eliminarlo
-        const alumnoEliminado = await alumnos.findOneAndDelete({ Matricula: matriculaAlumno });
+        const alumnoExistente = await alumnos.findById(_id);
 
-        // Verificar si el alumno existe y fue eliminado correctamente
-        if (!alumnoEliminado) {
+        if (!alumnoExistente) {
             return res.status(404).json({ message: 'El alumno no existe' });
         }
 
-        // Enviar una respuesta con el alumno eliminado
-        res.status(200).json({ message: 'Alumno eliminado correctamente', alumno: alumnoEliminado });
-    } catch (error) {
-        console.error('Error al eliminar el alumno:', error);
-        res.status(500).json({ message: 'Error al eliminar el alumno' });
-    }
+        alumnoExistente.asistencia = asistencia;
 
-}*/
+        const datosActualizados = await alumnoExistente.save();
+
+        res.json(datosActualizados);
+    } catch (error) {
+        console.error('Error al actualizar la asistencia del alumno:', error);
+        res.status(500).json({ message: 'Error interno del servidor' });
+    }
+}
+
 
 async function eliminar(req, res) {
     try {
@@ -332,8 +293,8 @@ async function Avatar(req, res){
 }
 */
 
-export {login,Correo,registro,editar,eliminar,refreshAccessToken, ValidacionEscaner//,Avatar
-    
+
+export {login,Correo,registro,editarAsistencia,editar,eliminar,refreshAccessToken, ValidacionEscaner 
 };
 
 

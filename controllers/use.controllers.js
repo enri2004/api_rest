@@ -4,9 +4,15 @@ import image from "../utils/image.js"
 
 async function obtenerUserLogued(req, res) {
     try {
-        const { usuario_id } = req.usuario; 
-        // Buscar al usuario por su ID en la base de datos
-        const usuario = await Datos.findById(usuario_id);
+        const { usuario_id } = req.usuario;
+
+        // Intentar encontrar el usuario en la colección Datos
+        let usuario = await Datos.findById(usuario_id);
+
+        if (!usuario) {
+            // Si no se encuentra en Datos, buscar en la colección Alumnos
+            usuario = await Alumnos.findById(usuario_id);
+        }
 
         if (!usuario) {
             return res.status(404).send({ msg: "Usuario no encontrado" });
@@ -19,6 +25,7 @@ async function obtenerUserLogued(req, res) {
         res.status(500).send({ msg: "Error al obtener los datos del usuario" });
     }
 }
+
 
 
 async function Id_maestro(req, res){

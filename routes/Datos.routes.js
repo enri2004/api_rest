@@ -1,6 +1,6 @@
 import { Router } from "express";
 import Datosctr from "../controllers/Datos.controllers.js";
-import  {login,Correo, registro,editar,eliminar,refreshAccessToken}  from "../controllers/Auth.Controllers.js";
+import  {login,Correo, registro,editar,eliminar,refreshAccessToken,editarAsistencia}  from "../controllers/Auth.Controllers.js";
 import {obtenerUserLogued, Id_maestro}from "../controllers/use.controllers.js"
 import asureAuth  from "../middlewares/Autentication.js";
 import  multiparty from "connect-multiparty"; 
@@ -59,6 +59,8 @@ router.get("/Id_maestro",[asureAuth],(req,res,next)=>{
 }
 )
 
-
+router.patch("/alumnos/editarAsistencia/:_id",[asureAuth], (req, res, next) => {
+    editarAsistencia(req, res, next).catch(next);
+});
 
 export default router;
