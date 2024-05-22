@@ -14,7 +14,7 @@ async function login(req,res){
     const {usuario,contraseña}=req.body;
 
     try {
-        if(!usuario) res.status(400).send({msg: "El email es obligatorio"});
+        if(!usuario) res.status(400).send({msg: "El Usuario es obligatorio"});
         if(!contraseña) res.status(400).send({msg: "El password es obligatorio"});
 
         const usuariollowerCase = usuario.toLowerCase();
@@ -76,8 +76,7 @@ async function Correo(req, res) {
         usuario,
         contraseña,
         contraseña1,
-        apellido_paterno,
-        apellido_materno,
+        apellido,
         nombre,
         institucion,
         telefono,
@@ -89,7 +88,6 @@ async function Correo(req, res) {
         // Buscar el usuario en la base de datos
         const user = await Datos.findOne({
             usuario: usuario,
-            apellido_paterno: apellido_paterno,
             apellido_materno: apellido_materno,
             nombre: nombre,
             institucion: institucion,
@@ -100,13 +98,14 @@ async function Correo(req, res) {
         if (!user) {
             return res.status(400).json({ error: "Usuario no encontrado" });
         }
+        
         // Enviar el correo electrónico con los datos del usuario
         await sendEmail(user);
 
         return res.status(200).json({ message: "Datos enviados correctamente" });
     } catch (error) {
         console.error("Error al enviar los datos por correo:", error);
-        return res.status(500).json({ error: "Error al enviar los datos por correo" });
+        return res.status(500).json({ error: "Error al enviar los datos por correo", msg });
     }
 }
 
@@ -159,7 +158,6 @@ async function registro(req, res, next){
         });
         const guardar = await alumno.save();
         res.status(200).json(guardar);
-        console.log("mmm")
     } catch (error) {
         res.status(500).json({
             message: "Error al enviar",
@@ -251,50 +249,9 @@ async function eliminar(req, res) {
 
 }
 
-async function ValidacionEscaner(req, res){
-    const {codigoQr}=req.params;
-
-    try{
-        const usuario = await Datos.findById(codigoQr);
-        if(usuario){
-           res.status(200).json({message:"usuario encontrado"+ usuario})
-        }
-    }catch(error){
-        res.status(500).json({message:"error"})
-    }
 
 
-}
-/*
-async function Avatar(req, res){
-    try {
-        const { avatar } = req.body;
-        const { _id } = req.params;
-        
-        // Buscar el usuario existente por su ID
-        const usuario = await Datos.findById(_id);
-        
-        // Verificar si el usuario existe
-        if (!usuario) {
-            return res.status(404).json({ message: 'Usuario no encontrado' });
-        }
-        
-        // Actualizar el avatar del usuario
-        usuario.avatar = avatar;
-
-        // Guardar los cambios en la base de datos
-        const datosActualizados = await usuario.save();
-
-        res.json(datosActualizados); // Devuelve los datos actualizados al cliente
-    } catch (error) {
-        console.error('Error al actualizar el avatar:', error);
-        res.status(500).json({ message: 'Error interno del servidor' });
-    }
-}
-*/
-
-
-export {login,Correo,registro,editarAsistencia,editar,eliminar,refreshAccessToken, ValidacionEscaner 
+export {login,Correo,registro,editarAsistencia,editar,eliminar,refreshAccessToken
 };
 
 
