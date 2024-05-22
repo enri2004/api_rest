@@ -19,7 +19,6 @@ const datosSchema = mongoose.Schema({
     contraseña1:String,
     roles:String,
     active:Boolean,
-    matricula:String,
     avatar:String,
     Id_maestro:String,
 });

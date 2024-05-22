@@ -10,42 +10,49 @@ import {createAccessToken,createRefreshToken,decoded,} from "../utils/jwt.js";
 
 
 dotenv.config();
-async function login(req,res){
-    const {usuario,contraseña}=req.body;
-
+async function login(req, res) {
+    const { usuario, contraseña } = req.body;
+  
+    if (!usuario) return res.status(400).send({ msg: "El Usuario es obligatorio" });
+    if (!contraseña) return res.status(400).send({ msg: "El password es obligatorio" });
+  
     try {
-        if(!usuario) res.status(400).send({msg: "El Usuario es obligatorio"});
-        if(!contraseña) res.status(400).send({msg: "El password es obligatorio"});
-
-        const usuariollowerCase = usuario.toLowerCase();
-
-        const response = await Datos.findOne({ usuario: usuariollowerCase });
-        
-        bcrypt.compare(contraseña, response.contraseña, (bcryptError, check)=>{
-            if(bcryptError){
-                res.status(500).send({msg: "Error del usuario"})
-            }else if(!check){
-                res.status(400).send({msg:"Password incorrecto"})
-            }else if(!response.active){
-                res.status(400).send({msg: "Usuario inactivo"})
-            }else{
-               const accessToken = createAccessToken(response);
-               const refreshToken = createRefreshToken(response);               
-               res.status(200).send({
-                   access: accessToken,
-                   refresh: refreshToken,
-                   msg: "Usuario logueado correctamente",
-                   roles: response.roles,
-                   Id_maestro: response.Id_maestro
-               });
-           }
-       });    
-        
+      const usuarioLowerCase = usuario.toLowerCase();
+      const user = await Datos.findOne({ usuario: usuarioLowerCase });
+  
+      if (!user) {
+        return res.status(400).send({ msg: "Usuario o contraseña incorrectos" });
+      }
+  
+      bcrypt.compare(contraseña, user.contraseña, (bcryptError, check) => {
+        if (bcryptError) {
+          return res.status(500).send({ msg: "Error del servidor" });
+        }
+  
+        if (!check) {
+          return res.status(400).send({ msg: "Password incorrecto" });
+        }
+  
+        if (!user.active) {
+          return res.status(400).send({ msg: "Usuario inactivo" });
+        }
+  
+        const accessToken = createAccessToken(user);
+        const refreshToken = createRefreshToken(user);
+  
+        return res.status(200).send({
+          access: accessToken,
+          refresh: refreshToken,
+          msg: "Usuario logueado correctamente",
+          roles: user.roles,
+          Id_maestro: user.Id_maestro
+        });
+      });
     } catch (error) {
-        res.status(500).send({msg: "Error al autenticar"});
+      return res.status(500).send({ msg: "Error al autenticar" });
     }
-
-}
+  }
+  
 
 async function refreshAccessToken(req,res){
    const { token } = req.body;
