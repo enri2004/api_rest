@@ -7,11 +7,9 @@ const datosSchema = mongoose.Schema({
     materia: String,
     semestre: String,
     sexo: String,
-    email: { type: String
-
-    }, // Índice único que permite valores nulos
+    email:String,
     telefono: Number,
-   fecha_nacimiento:String,
+   fecha_nacimiento:Number,
     edad: Number,
     lugar: String,
     usuario: String,
