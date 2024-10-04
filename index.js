@@ -1,57 +1,69 @@
 import express from "express";
-import cors from "cors";
-import router from "./routes/Datos.routes.js";
-import mongoose, { Schema } from "mongoose";
-import { registro } from "./controllers/Auth.Controllers.js";
-//import  {  DB_USER, DB_PASSWORD,DB_HOST,DB_NAME}   from "./constantes.js"
+import mysql from "mysql2";
+import cors from "cors"; 
+import router from "./routes/index.js"; // Cambié la importación de router
 
 const app = express();
-const port = 3000;
+const port = 5000;
 
-mongoose.Promise = global.Promise;
-const dbUrl = 'mongodb+srv://Cluster:BZ5ii1h90MDMoEgr@cluster.28qg27o.mongodb.net/informacion';
-//const dbUrl = 'mongodb://127.0.0.1:27017/informacion';
-mongoose.connect(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => console.log('Conectado a la base de datos'))
-    .catch(err => console.error('Error al conectar a la base de datos:', err));
-
+// Habilitar CORS para permitir solicitudes desde otros dominios
 app.use(cors());
+
+// Configuración para procesar datos en formato JSON y URL-encoded
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Conectar a la base de datos MySQL
+const db = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: '123456',
+    database: 'basesdedatos'
+});
+
+db.connect((err) => {
+    if (err) {
+        console.error("Error en la conexión a la base de datos:", err);
+        return;
+    }
+    console.log("Conexión exitosa a la base de datos");
+});
+
+// Usar el enrutador en la aplicación, las rutas se definen en otro archivo
 app.use("/api", router);
 
-const Datos = mongoose.model('Datos');
-
-app.get('/datos', async (req, res) => {
+// Ruta GET para obtener datos
+app.get('/api/datos', async (req, res) => {
     try {
-        // Consultar datos utilizando el modelo
-        const datos = await Datos.find();
-        // Enviar respuesta con los datos
-        res.json(datos);
-    } catch (error) {
-        console.error('Error al recuperar datos:', error);
-        res.status(500).json({ error: 'Error al recuperar datos' });
+        const [rows] = await db.promise().query("SELECT * FROM identificacion");
+        return res.json(rows);
+    } catch (err) {
+        console.error("Error al obtener los datos:", err);
+        res.status(500).send("Error al obtener los datos");
     }
 });
 
-
-
-const alumnos = mongoose.model('alumnos');
-
-app.get('/alumnos', async (req, res) => {
+app.get('/api/tabla', async (req, res) => {
     try {
-        // Consultar datos utilizando el modelo
-        const datos = await alumnos.find();
-        // Enviar respuesta con los datos
-        res.json(datos);
-    } catch (error) {
-        console.error('Error al recuperar datos:', error);
-        res.status(500).json({ error: 'Error al recuperar datos' });
+        let query;
+        const tabla = req.query.tabla;
+        if (tabla === "inventario") {
+            query = "SELECT * FROM inventario";
+        } else if (tabla === "paciente") {
+            query = "SELECT * FROM paciente";
+        } else if (tabla === "personal") {
+            query = "SELECT * FROM identificacion"; // Corrección aquí
+        } else {
+            return res.status(400).send("Tabla no válida");
+        }
+
+        const [rows] = await db.promise().query(query); // Ejecutar la consulta
+        res.json(rows); // Enviar la respuesta con los datos
+    } catch (err) {
+        console.error("Error al obtener los datos:", err);
+        res.status(500).send("Error al obtener los datos");
     }
 });
-
-
 
 app.listen(port, () => {
     console.log(`Servidor API REST escuchando en el puerto: ${port}`);

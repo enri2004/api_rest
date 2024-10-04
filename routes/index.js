@@ -1,9 +1,10 @@
-import routerx from "express-promise-router";
-import DatosR from "./Datos.routes";
-import usuario from "./Usuarios.routes"
+import { Router } from "express";
+import paciente from "./Datos.routes.js"; // Asegúrate de tener este archivo de rutas de paciente
 
-const router = routerx();
+const router = Router();
 
-router.use("/datos",DatosR);
-router.use("/alumno",registrar);
+// Usar las rutas del módulo "paciente"
+router.use("/", paciente);
+
 export default router;
+

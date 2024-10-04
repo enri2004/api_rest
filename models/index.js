@@ -1,7 +1,6 @@
-import Datos from "./Datos.models";
-import alumnos from "./Alumos.models"
+import {paciente, perfil_login} from "./datos"
 
 export default{
-    Datos,
-    alumnos
+    paciente,
+    perfil_login
 }
